@@ -2,6 +2,7 @@ import { API_BASE_URL } from './config.js';
 async function loadVersions() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/version`);
+      console.log('Version API response status:', res.status);
       const data = await res.json();
       document.getElementById('app-version').textContent = data.app_version || 'N/A';
       document.getElementById('model-version').textContent = data.model_version || 'N/A';
@@ -30,6 +31,7 @@ async function loadVersions() {
         body: JSON.stringify({ text })
       });
       const data = await res.json();
+      console.log('Analyze API response data:', data);
   
       if (res.ok && typeof data.sentiment === 'number') {
         // 1 is positive，0 is negative
