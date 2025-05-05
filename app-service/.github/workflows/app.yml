@@ -1,0 +1,31 @@
+# .github/workflows/release.yml
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install dependencies
+        run: pip install -r app-service/requirements.txt
+      - name: Build Docker image
+        run: |
+          TAG=${{ github.ref_name }}
+          docker build app-service \
+            --file app-service/Dockerfile \
+            --tag ghcr.io/${{ github.repository }}/app:${TAG}
+      - name: Push to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish
+        run: docker push ghcr.io/${{ github.repository }}/app:${{ github.ref_name }}

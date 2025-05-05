@@ -1,0 +1,4 @@
+lib-version @ git+https://github.com/remla2025-team16/lib-version.git@v1.0.0
+flask>=2.0.0
+flask-cors==5.0.1
+requests
