@@ -3,7 +3,7 @@
 ### **app** (or **app-frontend** + **app-service**)
 
 **Overview**
-A web application that allows users to submit restaurant reviews for sentiment analysis. Communicates with `model-service` via REST. The frontend is built with React and communicates with the backend via REST. And the backend is built with Flask and communicates with the model service via REST.
+A web application that allows users to submit restaurant reviews for sentiment analysis. Communicates with `model-service` via REST. The frontend is built with React and communicates with the backend via REST. And the backend is built with Flask and communicates with the model service via REST. The personal contribution can be seen from `ACTIVITY.md`. 
 
 #### **Features**
 
