@@ -1,0 +1,6 @@
+- PR opened by **ilmavapa** at **2025-05-06T13:09:13Z**: [#1](https://github.com/remla2025-team16/app/pull/1) "fix: commands README.md"
+- Commit by **Sloppyan** at **2025-05-05T19:02:07Z**: [e25a84d](https://github.com/remla2025-team16/app/commit/e25a84de6988389f91d724e00c492a709f34feac): fix: correct API url
+- Commit by **Sloppyan** at **2025-05-05T12:35:35Z**: [875c6e3](https://github.com/remla2025-team16/app/commit/875c6e37daa6ed4265e44fb166f52cbad09b84ab): fix: change app-frontend running port
+- Commit by **Sloppyan** at **2025-05-05T12:35:35Z**: [ffad6c6](https://github.com/remla2025-team16/app/commit/ffad6c6cbd71e809a012a11997b6be91118e1926): chore: update requirements.txt
+- Commit by **Sloppyan** at **2025-05-05T11:34:10Z**: [b90376b](https://github.com/remla2025-team16/app/commit/b90376bbcdd30aefbb81aa94833170cba048afc3): Initial commit
+- Commit by **Sloppyan** at **2025-05-02T21:04:56Z**: [2b5e95b](https://github.com/remla2025-team16/app/commit/2b5e95b82a28c675a8b36272f6d06d93d7321abe): Create app.yml
