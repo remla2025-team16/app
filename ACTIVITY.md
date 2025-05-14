@@ -1,6 +1,8 @@
+- Commit by **Anyan Huang** at **2025-05-09T08:51:39Z**: [1a58c1c](https://github.com/remla2025-team16/app/commit/1a58c1c507f4c653e71bc6385c7126e469267ba2): chore: update README
+- Commit by **Anyan Huang** at **2025-05-09T08:49:48Z**: [01fe1dc](https://github.com/remla2025-team16/app/commit/01fe1dc281cff621d99ddfe8a7bddb04730b1a40): chore: add ACTIVITY.md for tracking personal commitment
 - PR opened by **ilmavapa** at **2025-05-06T13:09:13Z**: [#1](https://github.com/remla2025-team16/app/pull/1) "fix: commands README.md"
-- Commit by **Sloppyan** at **2025-05-05T19:02:07Z**: [e25a84d](https://github.com/remla2025-team16/app/commit/e25a84de6988389f91d724e00c492a709f34feac): fix: correct API url
-- Commit by **Sloppyan** at **2025-05-05T12:35:35Z**: [875c6e3](https://github.com/remla2025-team16/app/commit/875c6e37daa6ed4265e44fb166f52cbad09b84ab): fix: change app-frontend running port
-- Commit by **Sloppyan** at **2025-05-05T12:35:35Z**: [ffad6c6](https://github.com/remla2025-team16/app/commit/ffad6c6cbd71e809a012a11997b6be91118e1926): chore: update requirements.txt
-- Commit by **Sloppyan** at **2025-05-05T11:34:10Z**: [b90376b](https://github.com/remla2025-team16/app/commit/b90376bbcdd30aefbb81aa94833170cba048afc3): Initial commit
+- Commit by **Anyan Huang** at **2025-05-05T19:02:07Z**: [e25a84d](https://github.com/remla2025-team16/app/commit/e25a84de6988389f91d724e00c492a709f34feac): fix: correct API url
+- Commit by **Anyan Huang** at **2025-05-05T12:35:35Z**: [875c6e3](https://github.com/remla2025-team16/app/commit/875c6e37daa6ed4265e44fb166f52cbad09b84ab): fix: change app-frontend running port
+- Commit by **Anyan Huang** at **2025-05-05T12:35:35Z**: [ffad6c6](https://github.com/remla2025-team16/app/commit/ffad6c6cbd71e809a012a11997b6be91118e1926): chore: update requirements.txt
+- Commit by **Anyan Huang** at **2025-05-05T11:34:10Z**: [b90376b](https://github.com/remla2025-team16/app/commit/b90376bbcdd30aefbb81aa94833170cba048afc3): Initial commit
 - Commit by **Sloppyan** at **2025-05-02T21:04:56Z**: [2b5e95b](https://github.com/remla2025-team16/app/commit/2b5e95b82a28c675a8b36272f6d06d93d7321abe): Create app.yml
