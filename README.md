@@ -16,13 +16,13 @@ A web application that allows users to submit restaurant reviews for sentiment a
 1. Pull the Docker image:
 
    ```bash
-   docker pull ghcr.io/remla25-team16/app:v1.0.0
+   docker pull ghcr.io/remla2025-team16/app:v1.0.0
    ```
 
 2. Start the app (configure `MODEL_SERVICE_URL`):
 
    ```bash
-   docker run -p 8080:8080 -e MODEL_SERVICE_URL=http://model-service:5000 ghcr.io/remla25-team16/app
+   docker run -p 8080:8080 -e MODEL_SERVICE_URL=http://model-service:5000 ghcr.io/remla2025-team16/app
    ```
 
    
