@@ -44,8 +44,8 @@ jobs:
       - name: Build and push app-frontend Docker image
         uses: docker/build-push-action@v4
         with:
-          context: app/app-frontend
-          file: app/app-frontend/Dockerfile
+          context: ./app-frontend
+          file: ./app-frontend/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.TAG }}
@@ -54,8 +54,8 @@ jobs:
       - name: Build and push app-service Docker image
         uses: docker/build-push-action@v4
         with:
-          context: app/app-service
-          file: app/app-service/Dockerfile
+          context: ./app-service
+          file: ./app-service/Dockerfile
           push: true
           tags: |
             ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.TAG }}
