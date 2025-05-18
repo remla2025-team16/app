@@ -31,16 +31,14 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       # 3. get the version from the tag
-      - name: Extract and Parse version info from tag
+      - name: Determine image tag
+        id: tag
         run: |
-          VERSION=${GITHUB_REF#refs/tags/v}
-          MAJOR=$(echo "$VERSION" | cut -d. -f1)
-          MINOR=$(echo "$VERSION" | cut -d. -f2)
-          PATCH=$(echo "$VERSION" | cut -d. -f3)
-          echo "version=$VERSION" >> $GITHUB_ENV
-          echo "version_major=$MAJOR" >> $GITHUB_ENV
-          echo "version_minor=$MINOR" >> $GITHUB_ENV
-          echo "version_patch=$PATCH" >> $GITHUB_ENV
+          if [[ "${GITHUB_REF}" == refs/tags/* ]]; then
+            echo "TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          else
+            echo "TAG=latest" >> $GITHUB_OUTPUT
+          fi
 
       # 4. build and push Docker image
       - name: Build and push app-frontend Docker image
@@ -50,7 +48,7 @@ jobs:
           file: ./app-frontend/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/app-frontend:${{ env.version_major }}.${{ env.version_minor }}.${{ env.version_patch }}
+            ghcr.io/${{ github.repository }}/app-frontend:${{ steps.tag.outputs.TAG }}
             ghcr.io/${{ github.repository }}/app-frontend:latest
       
       - name: Build and push app-service Docker image
@@ -60,5 +58,5 @@ jobs:
           file: ./app-service/Dockerfile
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/app-service:${{ env.version_major }}.${{ env.version_minor }}.${{ env.version_patch }}
+            ghcr.io/${{ github.repository }}/app-service:${{ steps.tag.outputs.TAG }}
             ghcr.io/${{ github.repository }}/app-service:latest
