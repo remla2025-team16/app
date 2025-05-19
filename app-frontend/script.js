@@ -1,12 +1,13 @@
-const hostname = window.location.hostname;  
-let API_BASE_URL;
+// const hostname = window.location.hostname;  
+// let API_BASE_URL;
 
-if (hostname === 'localhost' || hostname === '127.0.0.1') {
-  API_BASE_URL = 'http://localhost:8080';
-} else {
-  API_BASE_URL = `//${window.location.host}/api`;
-}
+// if (hostname === 'localhost' || hostname === '127.0.0.1') {
+//   API_BASE_URL = 'http://localhost:8080';
+// } else {
+//   API_BASE_URL = `//${window.location.host}/api`;
+// }
 
+const API_BASE_URL = `//${window.location.host}/api`;
 console.log('Using API_BASE_URL:', API_BASE_URL);
 
 async function loadVersions() {
