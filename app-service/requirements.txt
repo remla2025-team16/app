@@ -3,3 +3,4 @@ flask>=2.0.0
 flask-cors==5.0.1
 flasgger>=0.9.5
 requests>=2.25.0
+prometheus_client>=0.7.1
