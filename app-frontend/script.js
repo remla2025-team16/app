@@ -1,4 +1,4 @@
-import { API_BASE_URL } from './config.js';
+const API_BASE_URL = process.env.API_BASE_URL || 'http://localhost:8080';
 async function loadVersions() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/version`);
