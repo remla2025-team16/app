@@ -7,7 +7,7 @@
 //   API_BASE_URL = `//${window.location.host}/api`;
 // }
 
-const API_BASE_URL = `//${window.location.host}/api`;
+const API_BASE_URL = "/api";
 console.log('Using API_BASE_URL:', API_BASE_URL);
 
 async function loadVersions() {
