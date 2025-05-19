@@ -1,4 +1,14 @@
-const API_BASE_URL = window.API_BASE_URL || 'http://localhost:8080';
+const hostname = window.location.hostname;  
+let API_BASE_URL;
+
+if (hostname === 'localhost' || hostname === '127.0.0.1') {
+  API_BASE_URL = 'http://localhost:8080';
+} else {
+  API_BASE_URL = `//${window.location.host}/api`;
+}
+
+console.log('Using API_BASE_URL:', API_BASE_URL);
+
 async function loadVersions() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/version`);
