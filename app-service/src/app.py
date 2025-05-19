@@ -143,12 +143,24 @@ def health():
 
 @app.route('/api/metrics', methods=['GET'])
 def metrics():
-    # Update RAM usage
-    process = psutil.Process()
-    ram_usage = process.memory_info().rss  # in bytes
-    RAM_USAGE.set(ram_usage)
+  """
+  tags:
+    - Metrics
+  responses:
+    200:
+      description: Prometheus metrics
+      schema:
+        type: string
+    502:
+      description:  Metrics unavailable    
+  """
 
-    return generate_latest(), 200, {'Content-Type': 'text/plain; version=0.0.4; charset=utf-8'}
+    # Update RAM usage
+  process = psutil.Process()
+  ram_usage = process.memory_info().rss  # in bytes
+  RAM_USAGE.set(ram_usage)
+
+  return generate_latest(), 200, {'Content-Type': 'text/plain; version=0.0.4; charset=utf-8'}
 
 
 # Run the application
