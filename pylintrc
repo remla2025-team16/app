@@ -4,8 +4,11 @@ ignore=tests
 jobs=1
 load-plugins=pylint.extensions.docparams
 
+[TYPECHECK]
+ignored-modules=flasgger, flask_cors, lib_version.version_util
+
 [MESSAGES CONTROL]
-disable=C0114, C0115, C0116  
+disable=C0114, C0115, C0116, E0401
 
 [REPORTS]
 output-format=colorized
