@@ -171,6 +171,25 @@ def metrics():
         {"Content-Type": "text/plain; version=0.0.4; charset=utf-8"},
     )
 
+@app.route("/api/app-service-version", methods=["GET"])
+def app_service_version():
+    """
+    ---
+    tags:
+      - App Service
+    summary: Get the version of app-service
+    description: Returns the current version of the app-service instance.
+    responses:
+      200:
+        description: The version of app-service
+        schema:
+          type: object
+          properties:
+            app-service-version:
+              type: string
+              example: "v1"
+    """
+    return jsonify({"app-service-version": "v1"})
 
 # Run the application
 if __name__ == "__main__":
