@@ -171,5 +171,11 @@ def app_service_version():
     """
     return jsonify({"app-service-version": "v2.0.0"})
 
+@app.route('/whoami', methods=['GET'])
+def whoami():
+    pod_name = os.getenv('POD_NAME', 'unknown')
+    return jsonify({"podName": pod_name})
+
+# Run the application
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
