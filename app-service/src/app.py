@@ -189,7 +189,7 @@ def app_service_version():
               type: string
               example: "v1"
     """
-    return jsonify({"app-service-version": "v1.0.0"})
+    return jsonify({"app-service-version": "v2.0.0"})
 
 @app.route('/whoami', methods=['GET'])
 def whoami():
