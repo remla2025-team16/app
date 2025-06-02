@@ -189,7 +189,7 @@ def app_service_version():
               type: string
               example: "v1"
     """
-    return jsonify({"app-service-version": "v1"})
+    return jsonify({"app-service-version": "v2"})
 
 # Run the application
 if __name__ == "__main__":
