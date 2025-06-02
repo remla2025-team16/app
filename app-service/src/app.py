@@ -191,6 +191,28 @@ def app_service_version():
     """
     return jsonify({"app-service-version": "v2.0.0"})
 
+@app.route('/whoami', methods=['GET'])
+def whoami():
+    """
+    Get current Pod name
+    ---
+    tags:
+      - diagnostic
+    responses:
+      200:
+        description: Return the current pod's hostname as a plain text string
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                podName:
+                  type: string
+                  example: app-service-5f7b4c6f9f-abcde
+    """
+    pod_name = os.getenv('POD_NAME', 'unknown')
+    return jsonify({"podName": pod_name})
+
 # Run the application
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
