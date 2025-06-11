@@ -128,7 +128,7 @@ def feedback():
 def health():
     return jsonify({"status": "healthy"})
 
-@app.route("/api/metrics", methods=["GET"])
+@app.route("/metrics", methods=["GET"])
 def metrics():
     """
     tags:
