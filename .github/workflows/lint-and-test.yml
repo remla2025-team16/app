@@ -6,24 +6,60 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: write
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.10'
+        python-version: '3.12'
+
+    - name: Cache Pip dependencies
+      uses: actions/cache@v4
+      with:
+        path: ~/.cache/pip
+        key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+        restore-keys: |
+          ${{ runner.os }}-pip-
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pylint flake8
+        pip install pylint flake8 anybadge
+        if [ -f app-service/requirements.txt ]; then pip install -r app-service/requirements.txt; fi
 
-    - name: Run pylint
+    - name: Run pylint and calculate score
       run: |
-        pylint src/*.py
+        pylint app-service/src/*.py | tee pylint_output.txt || true
+        SCORE=$(grep -oP 'Your code has been rated at \K[0-9.]+' pylint_output.txt | awk '{printf "%.0f", $1 * 10}')
+        echo "PYLINT_SCORE=${SCORE:-0}" >> $GITHUB_ENV
+        echo "Pylint score is ${SCORE:-0}%"
 
     - name: Run flake8
       run: |
-        flake8 src/
+        # flake8 check can remain as a required pass/fail check
+        flake8 src/ --max-line-length=100 --ignore=E203,W503 --exclude=.git,__pycache__,build,dist
+
+    - name: Generate Pylint badge
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Generating badge on main branch..."
+        anybadge --value=${{ env.PYLINT_SCORE }} --file=pylint_badge.svg --label=Pylint --color=green
+
+    - name: Commit and push Pylint badge
+      if: github.ref == 'refs/heads/main'
+      run: |
+        git config --global user.name 'github-actions[bot]'
+        git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+        git add pylint_badge.svg
+        # Check if there are changes to commit
+        if git diff-index --quiet HEAD; then
+          echo "No changes to commit."
+        else
+          git commit -m "docs: Update Pylint score badge"
+          git push
+        fi

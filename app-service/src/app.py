@@ -62,7 +62,13 @@ def analyze():
 
         try:
             model_service_url = os.getenv("MODEL_SERVICE_URL", "http://model-service:5010")
-            response = requests.post(f"{model_service_url}/api/model", json={"text": text}, timeout=5)
+
+            response = requests.post(
+                f"{model_service_url}/api/model",
+                json={"text": text},
+                timeout=5
+            )
+
             res_2 = requests.get(f"{model_service_url}/api/version", timeout=5)
 
             prediction_class = response.json().get("sentiment", "unknown")
