@@ -41,8 +41,7 @@ jobs:
 
     - name: Run flake8
       run: |
-        # flake8 check can remain as a required pass/fail check
-        flake8 src/ --max-line-length=100 --ignore=E203,W503 --exclude=.git,__pycache__,build,dist
+        flake8 app-service/src/ --max-line-length=100 --ignore=E203,W503 --exclude=.git,__pycache__,build,dist
 
     - name: Generate Pylint badge
       if: github.ref == 'refs/heads/main'
