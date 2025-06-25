@@ -188,7 +188,7 @@ def app_service_version():
               type: string
               example: "v2"
     """
-    return jsonify({"app-service-version": "v2.0.0"})
+    return jsonify({"app-service-version": "v1.0.0"})
 
 @app.route("/api/feedback", methods=["POST"])
 def feedback():

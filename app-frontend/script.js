@@ -8,13 +8,13 @@
 // }
 
 const API_BASE_URL = "";
-// to be deleted
-// const API_BASE_URL = "http://localhost:8080";
+const APP_VERSION = 'v1';
 console.log('Using API_BASE_URL:', API_BASE_URL);
+console.log('Using APP_VERSION:', APP_VERSION);
 
 async function loadVersions() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/version`);
+    const res = await fetch(`${API_BASE_URL}/api/version`, { headers: { version: APP_VERSION } });
     console.log('Version API response status:', res.status);
     const data = await res.json();
     document.getElementById('app-version').textContent = data.app_version || 'N/A';
@@ -46,8 +46,8 @@ async function analyzeText() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/analyze`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text })
+      headers: { 'Content-Type': 'application/json', version: APP_VERSION },
+      body: JSON.stringify({ text }),
     });
     const data = await res.json();
     console.log('Analyze API response data:', data);
@@ -76,7 +76,7 @@ async function sendFeedback(text, predicted_sentiment, actual_sentiment) {
   try {
     await fetch(`${API_BASE_URL}/api/feedback`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', version: APP_VERSION },
       body: JSON.stringify({
         text,
         predicted_sentiment,
@@ -92,7 +92,7 @@ async function sendFeedback(text, predicted_sentiment, actual_sentiment) {
 
 async function loadAppServiceVersion() {
   try {
-    const res = await fetch(`${API_BASE_URL}/api/app-service-version`);
+    const res = await fetch(`${API_BASE_URL}/api/app-service-version`, { headers: { version: APP_VERSION } });
     const data = await res.json();
     document.getElementById('app-service-version').textContent =
       data['app-service-version'] || 'N/A';
