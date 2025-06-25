@@ -48,6 +48,29 @@
       color: #555;
       text-align: center;
     }
+    #feedback-label{
+      margin-top: 3rem;
+    }
+    #feedback {
+      margin-top: 1.5rem;
+      text-align: center;
+    }
+    #feedback-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    #feedback button {
+      font-size: 2.5rem;
+      padding: 0.5rem 1.2rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    #feedback button:hover {
+      transform: scale(1.2);
+    }
   </style>
 </head>
 <body>
@@ -57,13 +80,21 @@
     <input id="text-input" type="text" placeholder="Enter your comment..." />
     <button id="analyze-btn">Analyze</button>
   </div>
-
+  <div id="result-label" style=" display:none; margin-top:1rem; font-weight:bold;">
+    Analysis Result: 
+  </div>
   <div id="result"></div>
+  <div id="feedback-label" style="font-weight:bold; display:none;">
+    Incorrect analysis? Leave your feedback please!
+  </div>
+  <div id="feedback" style="margin-bottom: 1rem; display:none;">
+    <button id="thumbs-up" title="correct">👍</button>
+    <button id="thumbs-down" title="wrong">👎</button>
+  </div>
 
   <div id="versions">
     <div>App Version: <span id="app-version">loading...</span></div>
-    <div>Model Version: <span id="model-version">loading...</span></div>
-    <div>App service Version: <span id="app-service-version">loading...</span></div>
+    <div>Model service Version: <span id="app-service-version">loading...</span></div>
   </div>
   <script type="module" src="script.js"></script>
 </body>

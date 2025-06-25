@@ -7,6 +7,8 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from lib_version.version_util import VersionUtil
 from prometheus_client import Counter, Gauge, Histogram, generate_latest
+from threading import Lock
+import json
 
 REQUEST_COUNT = Counter(
     "webapp_predictions_total",
@@ -25,6 +27,10 @@ RESPONSE_LATENCY = Histogram(
 app = Flask(__name__)
 CORS(app)
 swagger = Swagger(app)
+
+feedback_file = os.path.join(os.path.dirname(__file__), "../data/feedback.json")
+feedback_file = os.path.abspath(feedback_file)
+feedback_lock = Lock()
 
 
 @app.route("/api/analyze", methods=["POST"])
@@ -63,6 +69,7 @@ def analyze():
 
         try:
             model_service_url = os.getenv("MODEL_SERVICE_URL", "http://model-service:5010")
+            print(model_service_url)
 
             response = requests.post(
                 f"{model_service_url}/api/model",
@@ -108,30 +115,30 @@ def version():
     })
 
 
-@app.route("/api/feedback", methods=["POST"])
-def feedback():
-    """
-    ---
-    tags:
-      - Feedback
-    parameters:
-      - name: data
-        in: body
-        required: true
-        schema:
-          type: object
-          properties:
-            text:
-              type: string
-            predicted_sentiment:
-              type: integer
-            actual_sentiment:
-              type: integer
-    responses:
-      200:
-        description: Feedback recorded
-    """
-    return jsonify({"status": "success"})
+# @app.route("/api/feedback", methods=["POST"])
+# def feedback():
+#     """
+#     ---
+#     tags:
+#       - Feedback
+#     parameters:
+#       - name: data
+#         in: body
+#         required: true
+#         schema:
+#           type: object
+#           properties:
+#             text:
+#               type: string
+#             predicted_sentiment:
+#               type: integer
+#             actual_sentiment:
+#               type: integer
+#     responses:
+#       200:
+#         description: Feedback recorded
+#     """
+#     return jsonify({"status": "success"})
 
 
 @app.route("/health", methods=["GET"])
@@ -183,6 +190,48 @@ def app_service_version():
     """
     return jsonify({"app-service-version": "v2.0.0"})
 
+@app.route("/api/feedback", methods=["POST"])
+def feedback():
+    """
+    ---
+    tags:
+      - Feedback
+    parameters:
+      - name: data
+        in: body
+        required: true
+        schema:
+          type: object
+          properties:
+            text:
+              type: string
+            predicted_sentiment:
+              type: integer
+            actual_sentiment:
+              type: integer
+    responses:
+      200:
+        description: Feedback recorded
+    """
+    data = request.get_json()
+    entry = {
+        "text": data.get("text"),
+        "predicted_sentiment": data.get("predicted_sentiment"),
+        "actual_sentiment": data.get("actual_sentiment"),
+    }
+
+    os.makedirs(os.path.dirname(feedback_file), exist_ok=True)
+    with feedback_lock:
+        if os.path.exists(feedback_file):
+            with open(feedback_file, "r", encoding="utf-8") as f:
+                feedbacks = json.load(f)
+        else:
+            feedbacks = []
+        feedbacks.append(entry)
+        with open(feedback_file, "w", encoding="utf-8") as f:
+            json.dump(feedbacks, f, ensure_ascii=False, indent=2)
+
+    return jsonify({"status": "success"})
 
 @app.route('/whoami', methods=['GET'])
 def whoami():

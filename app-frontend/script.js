@@ -7,7 +7,9 @@
 //   API_BASE_URL = `//${window.location.host}/api`;
 // }
 
-const API_BASE_URL = "";
+// const API_BASE_URL = "";
+// to be deleted
+const API_BASE_URL = "http://localhost:8080";
 console.log('Using API_BASE_URL:', API_BASE_URL);
 
 async function loadVersions() {
@@ -16,11 +18,11 @@ async function loadVersions() {
     console.log('Version API response status:', res.status);
     const data = await res.json();
     document.getElementById('app-version').textContent = data.app_version || 'N/A';
-    document.getElementById('model-version').textContent = data.model_version || 'N/A';
+    // document.getElementById('model-version').textContent = data.model_version || 'N/A';
   } catch (err) {
     console.error('Error fetching versions:', err);
     document.getElementById('app-version').textContent = 'error';
-    document.getElementById('model-version').textContent = 'error';
+    // document.getElementById('model-version').textContent = 'error';
   }
 }
   
@@ -33,7 +35,13 @@ async function analyzeText() {
   }
 
   const resultEl = document.getElementById('result');
+  const feedbackEl = document.getElementById('feedback');
+  const resultLabel = document.getElementById('result-label');
+  const feedbacklabel = document.getElementById('feedback-label');
   resultEl.textContent = '…';  
+  feedbackEl.style.display = 'none';
+  resultLabel.style.display = 'none';
+  feedbacklabel.style.display = 'none';
 
   try {
     const res = await fetch(`${API_BASE_URL}/api/analyze`, {
@@ -47,13 +55,38 @@ async function analyzeText() {
     if (res.ok && typeof data.sentiment === 'number') {
       // 1 is positive，0 is negative
       resultEl.textContent = data.sentiment === 1 ? '😊' : '☹️';
+      resultLabel.style.display = '';
+      feedbackEl.style.display = '';
+      feedbacklabel.style.display = '';
+      document.getElementById('thumbs-up').onclick = () => sendFeedback(text, data.sentiment, 1);
+      document.getElementById('thumbs-down').onclick = () => sendFeedback(text, data.sentiment, 0);
     } else {
       console.error('Analyze API error:', data);
       resultEl.textContent = 'Error';
+      feedbackEl.style.display = 'none';
     }
   } catch (err) {
     console.error('Error calling analyze API:', err);
     resultEl.textContent = 'Error';
+    feedbackEl.style.display = 'none';
+  }
+}
+
+async function sendFeedback(text, predicted_sentiment, actual_sentiment) {
+  try {
+    await fetch(`${API_BASE_URL}/api/feedback`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        text,
+        predicted_sentiment,
+        actual_sentiment
+      })
+    });
+    alert('Thank you for your feedback!');
+    document.getElementById('feedback').style.display = 'none';
+  } catch (err) {
+    alert('Error sending feedback. Please try again later.');
   }
 }
 
