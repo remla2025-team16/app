@@ -7,9 +7,9 @@
 //   API_BASE_URL = `//${window.location.host}/api`;
 // }
 
-// const API_BASE_URL = "";
+const API_BASE_URL = "";
 // to be deleted
-const API_BASE_URL = "http://localhost:8080";
+// const API_BASE_URL = "http://localhost:8080";
 console.log('Using API_BASE_URL:', API_BASE_URL);
 
 async function loadVersions() {
