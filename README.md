@@ -1,5 +1,7 @@
 # app
 
+![pylint](pylint_badge.svg)
+
 ### **app** (or **app-frontend** + **app-service**)
 
 **Overview**

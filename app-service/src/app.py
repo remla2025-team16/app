@@ -26,6 +26,7 @@ app = Flask(__name__)
 CORS(app)
 swagger = Swagger(app)
 
+
 @app.route("/api/analyze", methods=["POST"])
 def analyze():
     """
@@ -62,7 +63,13 @@ def analyze():
 
         try:
             model_service_url = os.getenv("MODEL_SERVICE_URL", "http://model-service:5010")
-            response = requests.post(f"{model_service_url}/api/model", json={"text": text}, timeout=5)
+
+            response = requests.post(
+                f"{model_service_url}/api/model",
+                json={"text": text},
+                timeout=5
+            )
+
             res_2 = requests.get(f"{model_service_url}/api/version", timeout=5)
 
             prediction_class = response.json().get("sentiment", "unknown")
@@ -77,6 +84,7 @@ def analyze():
             return jsonify(result), response.status_code
         except requests.exceptions.RequestException:
             return jsonify({"error": "Model service unavailable"}), 502
+
 
 @app.route("/api/version", methods=["GET"])
 def version():
@@ -98,6 +106,7 @@ def version():
     return jsonify({
         "app_version": VersionUtil.get_version(),
     })
+
 
 @app.route("/api/feedback", methods=["POST"])
 def feedback():
@@ -124,9 +133,11 @@ def feedback():
     """
     return jsonify({"status": "success"})
 
+
 @app.route("/health", methods=["GET"])
 def health():
     return jsonify({"status": "healthy"})
+
 
 @app.route("/metrics", methods=["GET"])
 def metrics():
@@ -151,6 +162,7 @@ def metrics():
         {"Content-Type": "text/plain; version=0.0.4; charset=utf-8"},
     )
 
+
 @app.route("/api/app-service-version", methods=["GET"])
 def app_service_version():
     """
@@ -171,10 +183,12 @@ def app_service_version():
     """
     return jsonify({"app-service-version": "v2.0.0"})
 
+
 @app.route('/whoami', methods=['GET'])
 def whoami():
     pod_name = os.getenv('POD_NAME', 'unknown')
     return jsonify({"podName": pod_name})
+
 
 # Run the application
 if __name__ == "__main__":

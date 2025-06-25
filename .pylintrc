@@ -1,0 +1,28 @@
+[MASTER]
+ignore=tests
+jobs=1
+load-plugins=pylint.extensions.docparams
+
+[MESSAGES CONTROL]
+disable=C0114, C0115, C0116, W1514
+
+[BASIC]
+good-names=
+    X_train,
+    X_test,
+    y_train,
+    y_test,
+    df,
+    i,
+    j,
+    k
+
+
+[REPORTS]
+score=yes
+output-format=colorized
+
+[FORMAT]
+max-line-length=100
+max-args=10
+max-positional-arguments=10

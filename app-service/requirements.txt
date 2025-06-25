@@ -5,3 +5,4 @@ flasgger>=0.9.5
 requests>=2.25.0
 prometheus_client>=0.7.1
 psutil
+anybadge
