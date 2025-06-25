@@ -8,7 +8,7 @@
 // }
 
 const API_BASE_URL = "";
-const APP_VERSION = 'v1';
+const APP_VERSION = 'v2';
 console.log('Using API_BASE_URL:', API_BASE_URL);
 console.log('Using APP_VERSION:', APP_VERSION);
 
