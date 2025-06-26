@@ -31,7 +31,7 @@ swagger = Swagger(app)
 feedback_file = os.path.join(os.path.dirname(__file__), "../data/feedback.json")
 feedback_file = os.path.abspath(feedback_file)
 feedback_lock = Lock()
-API_SERVICE_VERSION = "v1.0.0"
+API_SERVICE_VERSION = "v2.0.0"
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze():
