@@ -31,7 +31,7 @@ swagger = Swagger(app)
 feedback_file = os.path.join(os.path.dirname(__file__), "../data/feedback.json")
 feedback_file = os.path.abspath(feedback_file)
 feedback_lock = Lock()
-
+API_SERVICE_VERSION = "v1.0.0"
 
 @app.route("/api/analyze", methods=["POST"])
 def analyze():
@@ -186,9 +186,9 @@ def app_service_version():
           properties:
             app-service-version:
               type: string
-              example: "v2"
+              example: "v2.0.0"
     """
-    return jsonify({"app-service-version": "v2.0.0"})
+    return jsonify({"app-service-version": API_SERVICE_VERSION})
 
 @app.route("/api/feedback", methods=["POST"])
 def feedback():
@@ -233,10 +233,10 @@ def feedback():
 
     return jsonify({"status": "success"})
 
-@app.route('/whoami', methods=['GET'])
+@app.route('/api/whoami', methods=['GET'])
 def whoami():
     pod_name = os.getenv('POD_NAME', 'unknown')
-    return jsonify({"podName": pod_name})
+    return jsonify({"podName": pod_name, "app-service-version": API_SERVICE_VERSION})
 
 
 # Run the application

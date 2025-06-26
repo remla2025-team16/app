@@ -8,7 +8,7 @@
 // }
 
 const API_BASE_URL = "";
-const APP_VERSION = 'v2';
+const APP_VERSION = 'v1';
 console.log('Using API_BASE_URL:', API_BASE_URL);
 console.log('Using APP_VERSION:', APP_VERSION);
 
@@ -17,15 +17,37 @@ async function loadVersions() {
     const res = await fetch(`${API_BASE_URL}/api/version`, { headers: { version: APP_VERSION } });
     console.log('Version API response status:', res.status);
     const data = await res.json();
-    document.getElementById('app-version').textContent = data.app_version || 'N/A';
-    // document.getElementById('model-version').textContent = data.model_version || 'N/A';
+    document.getElementById('model-version').textContent = data.app_version || 'N/A';
   } catch (err) {
     console.error('Error fetching versions:', err);
-    document.getElementById('app-version').textContent = 'error';
-    // document.getElementById('model-version').textContent = 'error';
+    document.getElementById('model-version').textContent = 'error';
   }
 }
-  
+
+async function loadAppServiceVersion() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/app-service-version`, { headers: { version: APP_VERSION } });
+    const data = await res.json();
+    document.getElementById('app-service-version').textContent =
+      data['app-service-version'] || 'N/A';
+  } catch (err) {
+    console.error('Error fetching app-service version:', err);
+    document.getElementById('app-service-version').textContent = 'error';
+  }
+}
+
+async function loadAppServiceWhoami() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/whoami`, { headers: { version: APP_VERSION } });
+    const data = await res.json();
+    document.getElementById('app-service-pod').textContent =
+      `${data.podName || 'N/A'} (${data['app-service-version'] || 'N/A'})`;
+  } catch (err) {
+    console.error('Error fetching app-service whoami:', err);
+    document.getElementById('app-service-pod').textContent = 'error';
+  }
+}
+
 async function analyzeText() {
   const inputEl = document.getElementById('text-input');
   const text = inputEl.value.trim();
@@ -89,18 +111,6 @@ async function sendFeedback(text, predicted_sentiment, actual_sentiment) {
     alert('Error sending feedback. Please try again later.');
   }
 }
-
-async function loadAppServiceVersion() {
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/app-service-version`, { headers: { version: APP_VERSION } });
-    const data = await res.json();
-    document.getElementById('app-service-version').textContent =
-      data['app-service-version'] || 'N/A';
-  } catch (err) {
-    console.error('Error fetching app-service version:', err);
-    document.getElementById('app-service-version').textContent = 'error';
-  }
-}
   
 window.addEventListener('load', () => {
   document.getElementById('analyze-btn').addEventListener('click', analyzeText);
@@ -109,4 +119,5 @@ window.addEventListener('load', () => {
   });
   loadVersions();
   loadAppServiceVersion();
+  loadAppServiceWhoami();
 });  
